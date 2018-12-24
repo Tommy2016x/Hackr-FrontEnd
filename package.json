@@ -11,9 +11,13 @@
   "dependencies": {
     "axios": "^0.18.0",
     "expo": "^31.0.2",
+    "expo-jwt": "^1.1.0",
+    "jsonwebtoken": "^8.4.0",
+    "jwt-decode": "^2.2.0",
     "native-base": "^2.8.1",
     "react": "16.5.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-31.0.0.tar.gz",
+    "react-native-pure-jwt": "^1.6.0",
     "react-router-native": "^4.3.0"
   },
   "devDependencies": {

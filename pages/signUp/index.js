@@ -51,6 +51,12 @@ export default class SignUp extends Component{
                 onChangeText={(userName) => this.setState({userName})}
                 value={this.state.text}
                  />
+                <Text>Email</Text>
+                <TextInput
+                style={styles.TextInput}
+                onChangeText={(passWord) => this.setState({passWord})}
+                value={this.state.text}
+                 />
                 <Text>Password</Text>
                 <TextInput
                 style={styles.TextInput}

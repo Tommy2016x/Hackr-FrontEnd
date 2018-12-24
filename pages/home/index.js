@@ -1,7 +1,9 @@
 import React, {Component} from 'react';
-import {View,TextInput,StyleSheet,Text,Button} from 'react-native';
+import {View,TextInput,StyleSheet,Text,Button,AsyncStorage} from 'react-native';
 import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
+//styling 
 let styles = StyleSheet.create({
     TextInput: {
         height: 40, 
@@ -22,7 +24,7 @@ let styles = StyleSheet.create({
     buttonStyle: {
         margin: 5
     }
-})
+});
 
 export default class Home extends Component {
     constructor(props){
@@ -33,22 +35,38 @@ export default class Home extends Component {
         }
     }
 
+    //authenticates user
     login = async () => {
         console.log('login')
+
         let {email,password} = this.state;
 
-        let response = await axios.post('http://192.168.10.102:3000/users/login',{email,password})
-        console.log(response.data)
+        try{
+            let data = await axios.post('http://192.168.10.102:3000/users/login',{email,password})
+            token = data.data
+
+            token ? console.log(jwtDecode(token)) : console.log('invalid info')
+            
+            if(token){
+                await AsyncStorage.setItem("token",token);
+                
+                this.props.history.push("/main");
+            }
+        }catch(err){
+            console.log(err);
+        }
+
     }
 
+    //routes to signup page
     routeSignUp = () => {
-        this.props.history.push("/signup")
+        this.props.history.push("/signup");
     }
 
     render(){
         return(
             <View style = {styles.content}>
-                <Text>Username</Text>
+                <Text>Username or Email</Text>
                 <TextInput
                 style={styles.TextInput}
                 onChangeText={(email) => this.setState({email})}
