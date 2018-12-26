@@ -1,5 +1,7 @@
 import React,{Component} from 'react';
 import {View,Text,TextInput,Button,StyleSheet} from 'react-native';
+import axios from 'axios';
+import jwtDecode from 'jwt-decode';
 
 let styles = StyleSheet.create({
     TextInput: {
@@ -30,6 +32,7 @@ export default class SignUp extends Component{
         this.state={
             username: '',
             password: '',
+            email: '',
             passwordConfirm: ''
         }
     }
@@ -38,8 +41,32 @@ export default class SignUp extends Component{
         this.props.history.push("/")
     }
 
-    routeSignUp = () => {
+    routeSignUp = async () => {
         console.log('signup')
+
+        let {email,password,username,passwordConfirm} = this.state;
+
+        if(password != passwordConfirm)
+            console.log('passwords do not match')
+
+        else{
+
+        try{
+            let data = await axios.post('http://192.168.10.102:3000/users/signup',{email,password,username})
+            token = data.data;
+
+            token ? console.log(jwtDecode(token)) : console.log('username or email already exists')
+            
+            if(token){
+                await AsyncStorage.setItem("token",token);
+                
+                this.props.history.push("/main");
+            }
+        }catch(err){
+            console.log(err);
+        }
+    }
+
     }
 
     render(){
@@ -48,19 +75,19 @@ export default class SignUp extends Component{
                 <Text>Username</Text>
                 <TextInput
                 style={styles.TextInput}
-                onChangeText={(userName) => this.setState({userName})}
+                onChangeText={(username) => this.setState({username})}
                 value={this.state.text}
                  />
                 <Text>Email</Text>
                 <TextInput
                 style={styles.TextInput}
-                onChangeText={(passWord) => this.setState({passWord})}
+                onChangeText={(email) => this.setState({email})}
                 value={this.state.text}
                  />
                 <Text>Password</Text>
                 <TextInput
                 style={styles.TextInput}
-                onChangeText={(passWord) => this.setState({passWord})}
+                onChangeText={(password) => this.setState({password})}
                 value={this.state.text}
                  />
                 <Text>Confirm Password</Text>

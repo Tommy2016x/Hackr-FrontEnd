@@ -13,9 +13,10 @@ export default class App extends React.Component {
           <Switch>
             <Route exact path = "/main" component = {Main}/>
             <Route exact path= "/" component = {Home} />
-            <Route path = "/signup" component = {Signup}/>
+            <Route exact path = "/signup" component = {Signup}/>
           </Switch>
       </NativeRouter>
+      // <Main />
     );
   }
 }

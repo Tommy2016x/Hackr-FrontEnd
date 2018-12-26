@@ -1,5 +1,8 @@
 import React, {Component} from 'react';
-import {View,Text,AsyncStorage} from 'react-native';
+import {NativeRouter,Switch,Route} from 'react-router-native';
+import {AsyncStorage} from 'react-native';
+
+import MainView from './mainview';
 
 export default class Main extends Component{
     constructor(props){
@@ -23,9 +26,12 @@ export default class Main extends Component{
 
     render(){
         return(
-            <View>
-                <Text>Dashboard</Text>
-            </View>
+        //    <NativeRouter>
+        //        <Switch>
+        //            <Route path = "/main" Component = {MainView} />
+        //        </Switch>
+        //    </NativeRouter>
+            <MainView />
         )
     }
 }
