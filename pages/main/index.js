@@ -12,7 +12,8 @@ export default class Main extends Component{
         this.state = {
             token: null,
             id: null,
-            locationData: null
+            locationData: null,
+            nearbyUsers: null
         }
     }
 
@@ -35,14 +36,21 @@ export default class Main extends Component{
             this.setState({token});
             this.setState({id});
 
-            let res = await axios.patch('http://192.168.10.102:3000/users/updateOne',{
+            await axios.patch('http://192.168.10.102:3000/users/updateOne',{
                 id: this.state.id,
                 param: "location",
                 value: this.state.locationData
             });
 
-            console.log(res.data);
+            let response = await axios.post('http://192.168.10.102:3000/location/findUsers',{
+                locationData: this.state.locationData
+            })
+
+            let nearbyUsers = response.data;
             
+            this.setState({nearbyUsers});
+
+            console.log(this.state.nearbyUsers)
         }catch(err){
             throw err;
         }
