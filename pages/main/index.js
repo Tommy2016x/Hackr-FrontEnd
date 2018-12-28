@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import {NativeRouter,Switch,Route} from 'react-router-native';
 import {AsyncStorage} from 'react-native';
+import jwtDecode from 'jwt-decode';
+import axios from 'axios';
 
 import MainView from './mainview';
 
@@ -8,19 +10,41 @@ export default class Main extends Component{
     constructor(props){
         super(props);
         this.state = {
-            token: null
+            token: null,
+            id: null,
+            locationData: null
         }
     }
+
+    getCurrentPosition = (options = {}) => {
+        return new Promise((resolve, reject) => {
+          navigator.geolocation.getCurrentPosition(resolve, reject, options);
+        });
+      };
 
     async componentDidMount(){
         try{
             const token = await AsyncStorage.getItem("token");
 
-            this.setState({token});
+            const location = await this.getCurrentPosition();
+            const{latitude,longitude} = location.coords;
 
-            console.log(this.state.token);
+            let id = await jwtDecode(token).id
+
+            this.setState({locationData: {latitude,longitude}})
+            this.setState({token});
+            this.setState({id});
+
+            let res = await axios.patch('http://192.168.10.102:3000/users/updateOne',{
+                id: this.state.id,
+                param: "location",
+                value: this.state.locationData
+            });
+
+            console.log(res.data);
+            
         }catch(err){
-            throw err
+            throw err;
         }
     }
 

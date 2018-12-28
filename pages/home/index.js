@@ -44,8 +44,6 @@ export default class Home extends Component {
         try{
             let data = await axios.post('http://192.168.10.102:3000/users/login',{email,password})
             token = data.data;
-
-            token ? console.log(jwtDecode(token)) : console.log('invalid info')
             
             if(token){
                 await AsyncStorage.setItem("token",token);
