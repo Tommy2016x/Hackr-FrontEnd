@@ -1,5 +1,4 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
 import {NativeRouter,Switch,Route} from 'react-router-native';
 
 import Home from './pages/home';
@@ -16,7 +15,6 @@ export default class App extends React.Component {
             <Route exact path = "/signup" component = {Signup}/>
           </Switch>
       </NativeRouter>
-      // <Main />
     );
   }
 }

@@ -3,27 +3,9 @@ import {View,Text,TextInput,Button,StyleSheet,AsyncStorage} from 'react-native';
 import axios from 'axios';
 import jwtDecode from 'jwt-decode';
 
-let styles = StyleSheet.create({
-    TextInput: {
-        height: 40, 
-        borderColor: 'gray', 
-        borderWidth: 1,
-        width: '50%',
-        textAlign: 'center'
-    },
-    content: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center'
-    },
-    buttons: {
-        flexDirection: 'row',
-        marginTop: 5
-    },
-    buttonStyle: {
-        margin: 5
-    }
-})
+import styles from './styles';
+
+import {SignUpUser} from '../../services/users';
 
 export default class SignUp extends Component{
     constructor(props){
@@ -37,39 +19,11 @@ export default class SignUp extends Component{
         }
     }
 
-    login = () => {
-        this.props.history.push("/")
-    }
-
-    routeSignUp = async () => {
-        console.log('signup')
-
-        let {email,password,username,passwordConfirm} = this.state;
-
-        if(password != passwordConfirm)
-            console.log('passwords do not match')
-
-        else{
-
-        try{
-            let data = await axios.post('http://192.168.10.102:3000/users/signup',{email,password,username})
-            token = data.data;
-
-            token ? console.log(jwtDecode(token)) : console.log('username or email already exists')
-            
-            if(token){
-                await AsyncStorage.setItem("token",token);
-                
-                this.props.history.push("/main");
-            }
-        }catch(err){
-            console.log(err);
-        }
-    }
-
-    }
-
     render(){
+
+        let {username,email,password,passwordConfirm} = this.state;
+        let {history} = this.props;
+
         return(
             <View style = {styles.content}>
                 <Text>Username</Text>
@@ -99,12 +53,12 @@ export default class SignUp extends Component{
                 <View style={styles.buttons}>
                     <Button 
                     title = "Back"
-                    onPress = {this.login}
+                    onPress = {() => {this.props.history.push("/")}}
                     style={styles.buttonStyle}
                     />
                     <Button 
                     title='Signup'
-                    onPress = {this.routeSignUp}
+                    onPress = {() => SignUpUser(email,username,password,passwordConfirm,history)}
                     style={styles.buttonStyle}
                     />
                 </View> 

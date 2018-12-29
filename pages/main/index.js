@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {NativeRouter,Switch,Route} from 'react-router-native';
 import {AsyncStorage} from 'react-native';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
+import { Router, Scene } from 'react-native-router-flux';
 
 import MainView from './mainview';
+import EditProfile from './editprofile';
 
 export default class Main extends Component{
     constructor(props){
@@ -49,8 +50,7 @@ export default class Main extends Component{
             let nearbyUsers = response.data;
             
             this.setState({nearbyUsers});
-
-            console.log(this.state.nearbyUsers)
+            
         }catch(err){
             throw err;
         }
@@ -58,12 +58,12 @@ export default class Main extends Component{
 
     render(){
         return(
-        //    <NativeRouter>
-        //        <Switch>
-        //            <Route path = "/main" Component = {MainView} />
-        //        </Switch>
-        //    </NativeRouter>
-            <MainView />
+            <Router hideNavBar= {true}>
+                <Scene key = "root">
+                    <Scene key ="MainView" title="MainView" component={MainView} initial={true} {...this.state} hideNavBar />
+                    <Scene key="EditProfile" title="EditProfile" component={EditProfile} {...this.state}/>
+                </Scene>
+            </Router>
         )
     }
 }
