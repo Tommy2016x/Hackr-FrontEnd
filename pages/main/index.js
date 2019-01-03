@@ -14,7 +14,8 @@ export default class Main extends Component{
             token: null,
             id: null,
             locationData: null,
-            nearbyUsers: null
+            nearbyUsers: null,
+            currentUser: null
         }
     }
 

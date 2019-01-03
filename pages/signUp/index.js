@@ -12,7 +12,6 @@ export default class SignUp extends Component{
         super(props);
 
         this.state={
-            username: '',
             password: '',
             email: '',
             passwordConfirm: ''
@@ -21,17 +20,11 @@ export default class SignUp extends Component{
 
     render(){
 
-        let {username,email,password,passwordConfirm} = this.state;
+        let {email,password,passwordConfirm} = this.state;
         let {history} = this.props;
 
         return(
             <View style = {styles.content}>
-                <Text>Username</Text>
-                <TextInput
-                style={styles.TextInput}
-                onChangeText={(username) => this.setState({username})}
-                value={this.state.text}
-                 />
                 <Text>Email</Text>
                 <TextInput
                 style={styles.TextInput}
@@ -58,7 +51,7 @@ export default class SignUp extends Component{
                     />
                     <Button 
                     title='Signup'
-                    onPress = {() => SignUpUser(email,username,password,passwordConfirm,history)}
+                    onPress = {() => SignUpUser(email,password,passwordConfirm,history)}
                     style={styles.buttonStyle}
                     />
                 </View> 

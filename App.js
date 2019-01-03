@@ -8,14 +8,14 @@ import Main from './pages/main';
 export default class App extends React.Component {
   render() {
     return (
-      <NativeRouter>
-          <Switch>
-            <Route exact path = "/main" component = {Main}/>
-            <Route exact path= "/" component = {Home} />
-            <Route exact path = "/signup" component = {Signup}/>
-          </Switch>
-      </NativeRouter>
+      // <NativeRouter>
+      //     <Switch>
+      //       <Route exact path = "/main" component = {Main}/>
+      //       <Route exact path= "/" component = {Home} />
+      //       <Route exact path = "/signup" component = {Signup}/>
+      //     </Switch>
+      // </NativeRouter>
+      <Main />
     );
   }
 }
-
