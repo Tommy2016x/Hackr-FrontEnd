@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
-import {Text,View,Button} from 'react-native';
-import {Container} from 'native-base';
+import {View} from 'react-native';
+import {Container,Button,Text} from 'native-base';
+
+import CardView from '../../../components/card';
 
 export default class Swiping extends Component{
     constructor(props){
@@ -10,7 +12,15 @@ export default class Swiping extends Component{
     render(){
         return(
             <View>
-                <Text>Swiping page</Text>
+                <CardView />
+                <View>
+                    <Button rounded succcess>
+                        <Text>Yes</Text>
+                    </Button>
+                    <Button rounded danger>
+                        <Text>No</Text>
+                    </Button>
+                </View>
             </View>
         );
     }
